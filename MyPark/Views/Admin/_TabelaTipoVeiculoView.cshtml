@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MyPark.Model.DataBase.Models.TipoVeiculo>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValorHora)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DtCadastro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inativo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValorHora)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DtCadastro)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inativo)
+        </td>
+        <td>            
+            @Ajax.ActionLink("Apagar", "ApagarVeiculo", new { id=item.Id }, new AjaxOptions()
+       {
+           HttpMethod = "POST",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "tblTipoVeiculo",
+           LoadingElementId = "loadAjax"
+       })
+        </td>
+    </tr>
+}
+
+</table>

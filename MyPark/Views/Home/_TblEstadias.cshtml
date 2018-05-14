@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MyPark.Model.DataBase.Models.Estadia>
+
+<table class="table table-striped table-bordered table-responsive">
+    <tr>
+        <th>
+            @Html.DisplayName("Placa")
+        </th>
+        <th>
+            @Html.DisplayName("Data de Entrada")
+        </th>
+        <th>
+            @Html.DisplayName("Hora de Entrada")
+        </th>
+        <th>
+            
+        </th>        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.veiculo.Placa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DtEntrada)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HoraEntrada)
+        </td>        
+        <td>
+           
+        </td>
+    </tr>
+}
+
+</table>

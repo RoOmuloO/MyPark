@@ -1,0 +1,42 @@
+﻿@model IEnumerable<MyPark.Model.DataBase.Models.Plano>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mensal)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mensal)
+            </td>
+            <td>
+                @Ajax.ActionLink("Apagar", "ApagarPlano", new { id = item.Id }, new AjaxOptions()
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "tblPlano",
+                    LoadingElementId = "loadAjax"
+                })
+            </td>
+        </tr>
+    }
+
+</table>
+

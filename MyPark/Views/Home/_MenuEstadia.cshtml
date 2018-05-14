@@ -1,0 +1,40 @@
+﻿<script type="text/javascript">
+    function exibirDlgNovaEntrada() {
+        $("#dlgNovaEstadia").modal("show");
+    }
+
+    function fecharNovaEstadia() {
+        $("#dlgNovaEstadia").modal("hide");
+        $('body').removeClass('modal-open');
+        $('.modal.backdrop').remove();
+    }
+</script>
+
+<div class="alert alert-info">
+
+    @*@Ajax.ActionLink("Entrada", "NovaEntrada", new AjaxOptions()
+        {
+            HttpMethod = "post",
+            LoadingElementId = "loadAjax",
+            OnSuccess = "exibirDlgNovaEntrada",
+            //OnFailure = "",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "telaEntrada"
+        })*@
+    <a data-ajax="true"
+       data-ajax-loading="#loadAjax"
+       data-ajax-method="post"
+       data-ajax-mode="replace"
+       data-ajax-success="exibirDlgNovaEntrada"
+       data-ajax-update="#telaEntrada"
+       href="@Url.Action("NovaEntrada","Home")"
+       class="btn btn-success">
+        <i class="glyphicon glyphicon-arrow-up"></i>
+        Entrada
+    </a>
+
+    <a href="#" class="btn btn-danger">
+        <i class="glyphicon glyphicon-arrow-down"></i>
+        Sair
+    </a>
+</div>

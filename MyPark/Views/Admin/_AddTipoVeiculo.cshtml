@@ -1,0 +1,81 @@
+﻿@model MyPark.Model.DataBase.Models.TipoVeiculo
+
+<script type="text/javascript">
+    function gravouObjeto() {
+        $("#dlgAddTipoVeiculo").modal("hide");
+        $('body').remove('modal-open');
+        $('.modal-backdrop').remove();
+    }
+</script>
+
+<div id="dlgAddTipoVeiculo" role="dialog" class="modal fade modal-sm">
+
+    @using (Ajax.BeginForm("GravarTipoVeiculo", "Admin", new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "tblTipoVeiculo",
+        LoadingElementId = "loadAjax",
+        OnSuccess = "gravouObjeto"
+
+    }))
+    {
+
+        @Html.AntiForgeryToken()
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Tipo Veículo</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                   
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ValorHora, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ValorHora, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ValorHora, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DtCadastro, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DtCadastro, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DtCadastro, "", new { @class = "text-danger" })
+                        </div>
+                    </div>                    
+                </div>
+                <div class="modal-footer form-horizontal">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <input type="submit" value="Save" class="btn btn-default" />   
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+</div>

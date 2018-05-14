@@ -1,0 +1,33 @@
+﻿@using MyPark.Model.DataBase.Models
+@model IEnumerable<MyPark.Model.DataBase.Models.TipoVeiculo>
+
+<script type="text/javascript">
+
+    function abrirTelaAddTipoVeiculo() {
+        $("#dlgAddTipoVeiculo").modal("show");
+    }
+</script>
+
+@{
+    ViewBag.Title = "TipoVeiculo";
+}
+
+<h2>TipoVeiculo</h2>
+
+@Ajax.ActionLink("Cadastrar", "ExibirAddTipoVeiculo", new AjaxOptions()
+{
+    HttpMethod = "post",
+    UpdateTargetId = "telaAddTipoVeiculo",
+    OnSuccess = "abrirTelaAddTipoVeiculo",
+    LoadingElementId = "loadAjax",
+    InsertionMode = InsertionMode.Replace
+} )
+
+<div id="tblTipoVeiculo">
+@Html.Partial("_TabelaTipoVeiculoView", Model)
+</div>
+
+
+<div id="telaAddTipoVeiculo">
+
+</div>
