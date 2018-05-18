@@ -35,7 +35,7 @@ namespace MyPark.Controllers
                 
             }
 
-            var estadias = DbFactory.Instance.EstadiaRepository.FindAll();
+            var estadias = DbFactory.Instance.EstadiaRepository.BuscarAtivas();
 
             return View(estadias);
         }
@@ -51,14 +51,62 @@ namespace MyPark.Controllers
 
         public PartialViewResult CriarEstadia(Estadia estadia, Guid idTipoVeiculo)
         {
-            var tipo = DbFactory.Instance.TipoVeiculoRepository.FindFirstById(idTipoVeiculo);
-            estadia.DtEntrada = DateTime.Now;
-            estadia.veiculo.Tipo = tipo;
+            var estadiaAux = DbFactory.Instance.EstadiaRepository.BuscarAtivaPelaPlaca(estadia.veiculo.Placa);
 
-            DbFactory.Instance.EstadiaRepository.Save(estadia);
+            if (estadiaAux == null)
+            {
 
-            var estadias = DbFactory.Instance.EstadiaRepository.FindAll();
+                var tipo = DbFactory.Instance.TipoVeiculoRepository.FindFirstById(idTipoVeiculo);
+                estadia.DtEntrada = DateTime.Now;
+                estadia.veiculo.Tipo = tipo;
 
+                DbFactory.Instance.EstadiaRepository.Save(estadia);
+
+                var estadias = DbFactory.Instance.EstadiaRepository.BuscarAtivas();
+
+                return PartialView("_TblEstadias", estadias);
+            }
+            else
+            {
+                throw new Exception("Veículo já estacionado");
+            }
+        }
+
+        public PartialViewResult SairEstadia(String placa, Boolean info)
+        {
+            var estadia = DbFactory.Instance.EstadiaRepository.BuscarAtivaPelaPlaca(placa);
+
+            if (estadia != null)
+            {
+                estadia.DtSaida = DateTime.Now;
+                var difData = (estadia.DtSaida - estadia.DtEntrada);
+                var valor = 0.0;
+
+                if (difData.Hours >= 0 || difData.Minutes > 15)
+                {
+                    valor = estadia.veiculo.Tipo.ValorHora * (difData.Hours + 1);
+                }
+                estadia.TotalAPagar = valor;
+
+                ViewBag.Info = info;
+
+                return PartialView("_InfoSaidaEstadia", estadia);
+            }
+            else
+            {
+                throw new Exception("Estadia não encontrada");
+            }
+        }
+
+        public PartialViewResult BaixarEstadia(Estadia estadia)
+        {
+            var estadiaAux = DbFactory.Instance.EstadiaRepository.FindFirstById(estadia.Id);
+            estadiaAux.DtSaida = estadia.DtSaida;
+            estadiaAux.TotalAPagar = estadia.TotalAPagar;
+
+            DbFactory.Instance.EstadiaRepository.Update(estadiaAux);
+
+            var estadias = DbFactory.Instance.EstadiaRepository.BuscarAtivas();
             return PartialView("_TblEstadias", estadias);
         }
     }

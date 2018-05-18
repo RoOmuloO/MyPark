@@ -1,0 +1,68 @@
+﻿@model MyPark.Model.DataBase.Models.Estadia
+
+<div id="dlgInfoSaidaEstadia" role="dialog" class="modal fade">
+
+    @using (Ajax.BeginForm("BaixarEstadia", "Home", new AjaxOptions()
+    {
+        HttpMethod = "Post",
+        OnSuccess = "closeDlgInfoSaidaEstadia",
+        LoadingElementId = "loadAjax",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "tblEstadias"
+    }))
+
+    {
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Informações de Estadia</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.DtSaida)
+                        @Html.HiddenFor(model => model.TotalAPagar)
+
+                        <div class="form-group">
+                            @Html.Label("Veiculo", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @(Model.veiculo.Tipo.Titulo) Placa: <b>@(Model.veiculo.Placa.ToUpper())</b>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Data/Hora Entrada", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Model.DtEntrada
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Data/Hora Saída", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Model.DtSaida
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Valor a Pagar", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8 text-right">
+                                <strong>@(Model.TotalAPagar.ToString("c2"))</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer form-horizontal">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        Cancelar
+                    </button>
+                    @if (!(bool)ViewBag.Info)
+                    {
+                        <input type="submit" value="Confirmar Saída" class="btn btn-default" />
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

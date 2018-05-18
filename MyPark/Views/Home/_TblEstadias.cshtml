@@ -28,7 +28,28 @@
             @Html.DisplayFor(modelItem => item.HoraEntrada)
         </td>        
         <td>
-           
+            <a data-ajax="true"
+               data-ajax-loading="#loadAjax"
+               data-ajax-method="post"
+               data-ajax-mode="replace"
+               data-ajax-success="exibirDlgSaidaEstadia"
+               data-ajax-update="#telaSaida"
+               href="@Url.Action("SairEstadia","Home", new { placa = item.veiculo.Placa, info = true})"
+               class="btn btn-info">
+                <i class="glyphicon glyphicon-info-sign"></i>
+                Info
+            </a>
+            <a data-ajax="true"
+               data-ajax-loading="#loadAjax"
+               data-ajax-method="post"
+               data-ajax-mode="replace"
+               data-ajax-success="exibirDlgSaidaEstadia"
+               data-ajax-update="#telaSaida"
+               href="@Url.Action("SairEstadia","Home", new { placa = item.veiculo.Placa, info = false})"
+               class="btn btn-danger">
+                <i class="glyphicon glyphicon-arrow-down"></i>
+                Saída
+            </a>
         </td>
     </tr>
 }

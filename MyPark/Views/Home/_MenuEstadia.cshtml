@@ -8,6 +8,29 @@
         $('body').removeClass('modal-open');
         $('.modal.backdrop').remove();
     }
+
+    function exibirDlgSaidaEstadia() {
+        $("#dlgInfoSaidaEstadia").modal("show");
+    }
+
+    function closeDlgInfoSaidaEstadia() {
+        $("#dlgInfoSaidaEstadia").modal("hide");
+        $('body').removeClass('modal-open');
+        $('.modal.backdrop').remove();
+    }
+
+    function falharNovaEstadia(data) {
+        fecharNovaEstadia();
+
+        toastr.options = {
+            "closeButton": true,
+            "positionClass": "toast-top-left"
+        }
+
+        
+        toastr["error"]("Veículo já se encontra estacionado", "Atenção")
+        console.log(data);
+    }
 </script>
 
 <div class="alert alert-info">
